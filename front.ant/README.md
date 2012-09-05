@@ -1,3 +1,3 @@
-Front end UI for application, used to communicate. 
+front end UI for application, used to communicate. 
 
-Provide input to system.
+provide input to system.
