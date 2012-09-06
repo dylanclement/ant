@@ -1,16 +1,16 @@
 express = require 'express'
-, http = require 'http'
 , routes = require './routes'
-, neo4j = require 'neo4j'
+, user = require './routes/user'
+, http = require 'http'
 , path = require 'path'
 
 app = express()
 
-membr_port = process.env.MEMBR_HTTP_PORT ? 36181
+front_port = process.env.FRONT_HTTP_PORT ? 36180
 
-app.configure -> 
-  app.set 'port', membr_port
-  app.set 'views', "#{__dirname}/views"
+app.configure ->
+  app.set 'port', front_port
+  app.set 'views', __dirname + '/views'
   app.set 'view engine', 'jade'
   app.use express.favicon
   app.use express.logger 'dev'
@@ -20,13 +20,13 @@ app.configure ->
   app.use require('less-middleware')( src: "#{__dirname}/public")
   app.use express.static(path.join(__dirname, 'public'))
 
-app.get('/', routes.index);
-app.get('/users', user.list);
 
 app.configure 'development', ->
   app.use express.errorHandler
 
-http.createServer(app).listen app.get 'port', ->
-  db = new neo4j.GraphDatabase 'http://localhost:7474'
-  routes app, db
-  console.log "Express server listening on port #{app.get('port')}"
+
+app.get '/', routes.index
+app.get '/users', user.list
+
+http.createServer(app).listen app.get('port'), ->
+  console.log "Express server listening on port " + app.get 'port'
