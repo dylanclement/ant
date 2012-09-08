@@ -26,7 +26,7 @@ app.get('/users', user.list);
 app.configure 'development', ->
   app.use express.errorHandler
 
-http.createServer(app).listen app.get 'port', ->
+http.createServer(app).listen app.get('port'), ->
   db = new neo4j.GraphDatabase 'http://localhost:7474'
   routes app, db
   console.log "Express server listening on port #{app.get('port')}"

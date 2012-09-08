@@ -20,6 +20,7 @@ module.exports = function(app, db){
     var from = req.params[0];
     var rel = req.params[1];
     var to = req.params[2];
+    console.log("from: " + from + " rel: " + rel + " to: " + to);
     res.json({ name: rel });
   });
 
@@ -34,6 +35,4 @@ module.exports = function(app, db){
       }
     });    
   });
-
-
 };
